@@ -1,0 +1,30 @@
+.marginTopRna{
+    margin-top: 35px;
+}
+
+.minuscule{
+    text-transform: lowercase;
+}
+
+.btnJaune{
+    background-color: #FBBD00;
+    color: white;
+}
+
+.btnJaune:hover{
+    background-color: #3C3C3C;
+    color: white;
+}
+
+.btnNoir{
+    background-color: #3C3C3C;
+    color: white;
+}
+
+.jaune{
+    color: #FBBD00;
+}
+
+.marginTopLogin{
+    margin-top: 125px;
+}

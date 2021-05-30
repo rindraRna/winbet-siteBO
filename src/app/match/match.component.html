@@ -1,0 +1,94 @@
+<h4>Gestion - <span class="jaune">Match</span></h4>
+<br/>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Liste des matchs</strong>
+            </div>
+            <div class="card-body">
+              <button>Ajouter un match</button>
+              <button>Réinitialiser le tableau</button>
+                <div class="mat-elevation-z8 cardRna">
+                  <div>
+                    <form ngForm class="form-horizontal"> 
+                      <div class="row form-group">
+                        <div class="col col-md-3">
+                          <label>Date</label>
+                          <input (change)="rechercheMulticritere()" [(ngModel)]="date" name="date" name="nomDevoir" class="form-control" type="datetime-local" placeholder="Date">
+                        </div>
+                        <div class="col col-md-3">
+                          <label>Equipe</label>
+                          <input (keyup)="rechercheMulticritere()" [(ngModel)]="equipe" name="equipe" class="form-control" type="text" placeholder="Equipe"/>
+                        </div>
+                        <div class="col col-md-3">
+                          <label>Championnat</label>
+                          <select (change)="rechercheMulticritere()" [(ngModel)]="championnat" name="championnat" class="form-control">
+                            <option value="Tous">Tous</option>
+                            <ng-container *ngFor="let championnat of championnats">
+                              <option value="{{championnat.nom}}">{{championnat.nom}}</option>
+                            </ng-container>
+                          </select>
+                        </div>
+                        <div class="col col-md-3">
+                          <label>Etat</label>
+                          <select (change)="rechercheMulticritere()" [(ngModel)]="etat" name="etat" class="form-control">
+                            <option value="4">Tous</option>
+                            <option value="0">Pariable</option>
+                            <option value="1">En cours</option>
+                            <option value="2">Terminé</option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <table class="table table-striped table-bordered" mat-table [dataSource]="dataSource" matSort>
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="date">
+                      <th mat-sort-header mat-header-cell *matHeaderCellDef> Date</th>
+                      <td mat-cell *matCellDef="let element">{{ element.date  | date}} à {{ element.date  | date: 'HH:mm'}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="match">
+                      <th mat-header-cell *matHeaderCellDef> Match </th>
+                      <td mat-cell *matCellDef="let element"> {{element.equipe1.nom}} vs {{element.equipe2.nom}} </td>
+                    </ng-container>
+                  
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="championnat">
+                      <th mat-header-cell *matHeaderCellDef> Championnat </th>
+                      <td mat-cell *matCellDef="let element"> {{element.championnat.nom}} </td>
+                    </ng-container>
+                  
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="lieu">
+                      <th mat-header-cell *matHeaderCellDef> Lieu </th>
+                      <td mat-cell *matCellDef="let element"> {{element.stade}} ({{element.endroit}}) </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="etat">
+                      <th mat-header-cell *matHeaderCellDef> Etat </th>
+                      <td mat-cell *matCellDef="let element"> {{valeurEtat(element.etat)}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="modifier">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let element"><button routerLink="/detailsMatch/{{ element._id }}">M</button></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="supprimer">
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let element"><button>S</button></td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>                  
+                  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
