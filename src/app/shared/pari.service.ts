@@ -7,7 +7,7 @@ import { Pari } from '../model/pari.model';
   providedIn: 'root'
 })
 export class PariService {
-  uri = "http://localhost:8010/api/pari";
+  uri = "https://winbet-api.herokuapp.com/api/pari";
 
   constructor(
     private http: HttpClient

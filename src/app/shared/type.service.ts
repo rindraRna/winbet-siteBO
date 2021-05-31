@@ -7,7 +7,7 @@ import { Type } from '../model/type.model';
   providedIn: 'root'
 })
 export class TypeService {
-  uri = "http://localhost:8010/api/type";
+  uri = "https://winbet-api.herokuapp.com/api/type";
 
   constructor(
     private http: HttpClient
