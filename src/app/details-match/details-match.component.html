@@ -3,7 +3,7 @@
 <!-- Orders -->
 <div class="orders">
     <div class="row">
-        <div class="col-xl-8">
+        <div class="col-xl-7">
             <div class="card">
                 <div class="card-header">
                     <strong class="card-title mb-3">{{match.championnat.nom}}</strong>
@@ -35,9 +35,24 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title mb-3">Statistique actuel sur ce match</strong>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="row">
+                            <h6 class="col-md-6">Nombre de paris versés:</h6>
+                            <h6 class="col-md-6">Total des montants des paris:</h6>
+                        </div>
+                        <hr/><hr/>
+                    </div>
+                </div>
+            </div>
         </div>  <!-- /.col-lg-8 -->
 
-        <div class="col-xl-4">
+        <div class="col-xl-5">
             <div class="row">
                 <div class="col-lg-6 col-xl-12">
                     <div class="card bg-flat-color-3">
@@ -53,7 +68,11 @@
                                                 <label class="form-control-label">Equipe1</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input [(ngModel)]="equipe1" name="equipe1" type="email" id="hf-email" name="hf-email" placeholder="Enter Email..." class="form-control"/>
+                                                <select [(ngModel)]="equipe1" name="equipe1" class="form-control">
+                                                    <ng-container *ngFor="let equipe of equipes">
+                                                        <option value="{{equipe._id}}">{{equipe.nom}}</option>
+                                                    </ng-container>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -61,7 +80,11 @@
                                                 <label class="form-control-label">Equipe2</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input [(ngModel)]="equipe2" name="equipe2" type="email" id="hf-email" name="hf-email" placeholder="Enter Email..." class="form-control"/>
+                                                <select [(ngModel)]="equipe2" name="equipe2" class="form-control">
+                                                    <ng-container *ngFor="let equipe of equipes">
+                                                        <option value="{{equipe._id}}">{{equipe.nom}}</option>
+                                                    </ng-container>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -70,9 +93,8 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <select [(ngModel)]="championnat" name="championnat" class="form-control">
-                                                    <option value="Tous">Tous</option>
                                                     <ng-container *ngFor="let championnat of championnats">
-                                                      <option value="{{championnat.nom}}">{{championnat.nom}}</option>
+                                                      <option value="{{championnat._id}}">{{championnat.nom}}</option>
                                                     </ng-container>
                                                   </select>
                                             </div>
@@ -82,7 +104,7 @@
                                                 <label class="form-control-label">Date</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input [(ngModel)]="dateEtHeure" name="dateEtHeure" type="email" id="hf-email" name="hf-email" placeholder="Enter Email..." class="form-control"/>
+                                                <input [(ngModel)]="dateEtHeure" name="dateEtHeure" type="datetime-local"  class="form-control" />
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -90,7 +112,7 @@
                                                 <label class="form-control-label">Stade</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input [(ngModel)]="stade" name="stade" type="email" id="hf-email" name="hf-email" placeholder="Enter Email..." class="form-control"/>
+                                                <input [(ngModel)]="stade" name="stade" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -98,7 +120,7 @@
                                                 <label class="form-control-label">Pays</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input [(ngModel)]="pays" name="pays" type="email" id="hf-email" name="hf-email" placeholder="Enter Email..." class="form-control"/>
+                                                <input [(ngModel)]="pays" name="pays" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <hr/>

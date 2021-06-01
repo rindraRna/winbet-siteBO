@@ -1,0 +1,303 @@
+<h4>Gestion - <span class="jaune">Ajout d'un match</span></h4>
+<br/>
+<!-- Orders -->
+<div class="orders">
+    <div class="row">
+        <div class="col-xl-7">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title mb-3">{{ championnat }}</strong>
+                </div>
+                <div class="card-body">
+                    <div class="mx-auto d-block">
+                        <h5 class="text-sm-center mt-2 mb-1">{{ equipe1 }} vs {{ equipe2 }}</h5>
+                        <div class="location text-sm-center"><i class="fa fa-map-marker"></i> {{stade}}, {{pays}} -{{ dateEtHeure | date }} - {{ dateEtHeure | date: 'HH:mm' }}</div>
+                    </div>
+                    <hr/><hr/>
+                    <div *ngIf="afficherParis" class="card-text">
+                        <h6>Vainqueur</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-secondary btnPari">{{ equipe1 }}
+                                    <span class="badge badge-light">{{ coteVainqueur1 }}</span>
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-secondary btnPari">null
+                                    <span class="badge badge-light">{{ coteVainqueur2 }}</span>
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-secondary btnPari">{{ equipe2 }}
+                                    <span class="badge badge-light">{{ coteVainqueur3 }}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h6>Les deux équipes marquent</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-secondary btnPari">Oui
+                                    <span class="badge badge-light">{{ coteMarquage1 }}</span>
+                                </button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-secondary btnPari">Non
+                                    <span class="badge badge-light">{{ coteMarquage2 }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title mb-3">Statistique actuel sur ce match</strong>
+                </div>
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="row">
+                            <h6 class="col-md-6">Nombre de paris versés:</h6>
+                            <h6 class="col-md-6">Total des montants des paris:</h6>
+                        </div>
+                        <hr/><hr/>
+                    </div>
+                </div>
+            </div>
+        </div>  <!-- /.col-lg-8 -->
+
+        <div class="col-xl-5">
+            <div class="row">
+                <div class="col-lg-6 col-xl-12">
+                    <div class="card bg-flat-color-3">
+                        <div class="card-header">
+                            <strong class="card-title">Ajout des informations</strong>
+                        </div>
+                        <div class="card-body" >
+                            <mat-horizontal-stepper linear #stepper>
+                                <mat-step [stepControl]="generalFormGroup" [editable]="isEditable">
+                                    <ng-template matStepLabel>Générales</ng-template>
+                                    <p>Informations générales du match</p>
+                                    <form [formGroup]="generalFormGroup" ngForm class="form-horizontal topRna"> 
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="form-control-label">Equipe1</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <select formControlName="equipe1" [(ngModel)]="equipe1" name="equipe1" class="form-control">
+                                                    <option value="Equipe 1">-- Choix de l'équipe 1 --</option>
+                                                    <ng-container *ngFor="let equipe of equipes">
+                                                        <option value="{{equipe.nom}}">{{equipe.nom}}</option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="form-control-label">Equipe2</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <select formControlName="equipe2" [(ngModel)]="equipe2" name="equipe2" class="form-control">
+                                                    <option value="Equipe 2">-- Choix de l'équipe 2 --</option>
+                                                    <ng-container *ngFor="let equipe of equipes">
+                                                        <option value="{{equipe.nom}}">{{equipe.nom}}</option>
+                                                    </ng-container>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="form-control-label">Championnat</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <select formControlName="championnat" [(ngModel)]="championnat" name="championnat" class="form-control">
+                                                    <option value="Championnat">-- Choix du championnat --</option>
+                                                    <ng-container *ngFor="let championnat of championnats">
+                                                      <option value="{{championnat.nom}}">{{championnat.nom}}</option>
+                                                    </ng-container>
+                                                  </select>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="form-control-label">Date</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input formControlName="dateEtHeure" [(ngModel)]="dateEtHeure" name="dateEtHeure" type="datetime-local"  class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="form-control-label">Stade</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input formControlName="stade" [(ngModel)]="stade" name="stade" type="text" class="form-control" placeholder="Entrer le stade"/>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-4">
+                                                <label class="form-control-label">Pays</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input formControlName="pays" [(ngModel)]="pays" name="pays" type="text" class="form-control" placeholder="Entrer le pays"/>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <button (click)="afficherMasquerParis()"  class="btn btn-outline-secondary btnPari" mat-button matStepperNext>Suivant</button>
+                                    </form>
+                                </mat-step>
+                                <mat-step [stepControl]="coteFormGroup" [editable]="isEditable">
+                                    <ng-template matStepLabel>Cotes</ng-template>
+                                    <p>Valeurs des côtes des paris</p>
+                                    <form [formGroup]="coteFormGroup" ngForm class="form-horizontal topRna"> 
+                                        <h6>Vainqueur</h6>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <label class="form-control-label">{{equipe1}}</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input formControlName="coteVainqueur1" [(ngModel)]="coteVainqueur1" name="coteVainqueur1" type="number" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <label class="form-control-label">null</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input formControlName="coteVainqueur2" [(ngModel)]="coteVainqueur2" name="coteVainqueur2" type="number" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <label class="form-control-label">{{equipe2}}</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input formControlName="coteVainqueur3" [(ngModel)]="coteVainqueur3" name="coteVainqueur3" type="number" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <h6>Les deux équipes marquent</h6>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <label class="form-control-label">Oui</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input formControlName="coteMarquage1" [(ngModel)]="coteMarquage1" name="coteMarquage1" type="number" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col-md-7">
+                                                <label class="form-control-label">Non</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input formControlName="coteMarquage2" [(ngModel)]="coteMarquage2" name="coteMarquage2" type="number" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button (click)="afficherMasquerParis()" class="btn btn-outline-secondary btnPari" mat-button matStepperPrevious>Précédent</button>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="btn btn-outline-secondary btnPari" mat-button matStepperNext>Suivant</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </mat-step>
+                                <mat-step>
+                                    <ng-template matStepLabel>Ajout</ng-template>
+                                    <h6>Informations générales:</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong> Equipes</strong>:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{equipe1}} vs {{equipe2}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong> Championnat</strong>:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{championnat}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong> Date</strong>:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ dateEtHeure | date }} à {{ dateEtHeure | date: 'HH:mm' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong> Lieu</strong>:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ stade }} ( {{ pays }} )</p>
+                                        </div>
+                                    </div>
+                                    <h6>Valeurs des côtes:</h6>
+                                    <p><strong>Vainqueur</strong></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>{{equipe1}}:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ coteVainqueur1 }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>null:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ coteVainqueur2 }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>{{equipe2}}:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ coteVainqueur3 }}</p>
+                                        </div>
+                                    </div>
+                                    <p><strong>Les deux équipes marquent</strong></p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p> Oui:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ coteMarquage1 }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p> Non:</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ coteMarquage2 }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <button class="btn btn-outline-secondary btnPari" mat-button matStepperPrevious>Précédent</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button (click)="ajoutMatchEtParis()" class="btn btn-outline-secondary btnPari" mat-button matStepperNext>Ajouter</button>
+                                        </div>
+                                    </div>
+                                </mat-step>
+                              </mat-horizontal-stepper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /.col-md-4 -->
+    </div>
+</div>
+<!-- /.orders -->

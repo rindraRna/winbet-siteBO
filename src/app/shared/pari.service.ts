@@ -16,4 +16,8 @@ export class PariService {
   getPariByIdMatchAndIdType(idMatch, idType):Observable<Pari[]> {
     return this.http.get<Pari[]>(this.uri+"/"+idMatch+"/"+idType);
   }  
+
+  ajout(pari: Pari):Observable<any> {
+    return this.http.post(this.uri+"s", pari);
+  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Championnat } from '../model/championnat.model';
@@ -16,4 +16,8 @@ export class ChampionnatService {
   getChampionnats():Observable<Championnat[]> {
     return this.http.get<Championnat[]>(this.uri+"s");
   } 
+
+  getChampionnatByNom(nom: string):Observable<Championnat> {
+    return this.http.get<Championnat>(this.uri+"/nom/"+nom);
+  }
 }

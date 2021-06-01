@@ -15,8 +15,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
+import { AjoutMacthComponent } from './ajout-macth/ajout-macth.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { SnakBarAjoutComponent } from './snak-bar-ajout/snak-bar-ajout.component';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes:Routes = [
   {
@@ -34,6 +39,10 @@ const routes:Routes = [
   {
     path:"detailsMatch/:idMatch",
     component: DetailsMatchComponent
+  },
+  {
+    path:"ajoutMatch",
+    component: AjoutMacthComponent
   }
 ]
 
@@ -43,7 +52,9 @@ const routes:Routes = [
     LoginComponent,
     AccueilComponent,
     MatchComponent,
-    DetailsMatchComponent
+    DetailsMatchComponent,
+    AjoutMacthComponent,
+    SnakBarAjoutComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +67,10 @@ const routes:Routes = [
     MatInputModule,
     FormsModule,
     MatTabsModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatIconModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

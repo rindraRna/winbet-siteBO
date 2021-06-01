@@ -13,6 +13,10 @@ export class MatchService {
     private http: HttpClient
   ) { }
 
+  ajoutMatch(match: Match_paris):Observable<any> {
+    return this.http.post(this.uri+"s", match);
+  }
+
   getMatchs():Observable<Match_paris[]> {
     return this.http.get<Match_paris[]>(this.uri+"s");
   } 
