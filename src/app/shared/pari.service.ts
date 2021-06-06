@@ -13,6 +13,18 @@ export class PariService {
     private http: HttpClient
   ) { }
 
+  getPariByIdMatchAndValeur(idMatch, valeur):Observable<Pari> {
+    return this.http.get<Pari>(this.uri+"/match/"+idMatch+"/valeur/"+valeur);
+  } 
+
+  getPariByIdMatch(idMatch):Observable<Pari[]> {
+    return this.http.get<Pari[]>(this.uri+"/"+idMatch);
+  } 
+
+  modifier(pari: Pari):Observable<any> {
+    return this.http.put(this.uri+"s", pari);
+  }
+
   getPariByIdMatchAndIdType(idMatch, idType):Observable<Pari[]> {
     return this.http.get<Pari[]>(this.uri+"/"+idMatch+"/"+idType);
   }  

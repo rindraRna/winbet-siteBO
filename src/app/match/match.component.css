@@ -4,3 +4,46 @@
     padding-top: 2%;
     padding-bottom: 2%;
 }
+
+.align-center{
+    margin-left: 43%;
+}
+
+.loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #FBBD00;
+}
+
+.jaune{
+    color: #FBBD00
+}
+
+.btnWarningRna{
+    background-color: #FBBD00;
+    color: black;
+}
+
+.espacement{
+    margin-left: 5px;
+}
+
+.icon-jaune {
+    color: #FBBD00;
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.icon-jaune svg {
+    fill: black;
+}
+
+th{
+    font-size: 14px;
+    color: black;
+}
+
+.th-jaune{
+    font-size: 14px;
+    color: #FBBD00;
+}
+
+label{
+    font-weight: 500;
+}

@@ -13,11 +13,31 @@ export class ChampionnatService {
     private http: HttpClient
   ) { }
 
+  ajout(championnat: Championnat):Observable<any> {
+    return this.http.post(this.uri+"s", championnat);
+  }
+
+  modifier(championnat: Championnat):Observable<any> {
+    return this.http.put(this.uri+"s", championnat);
+  }
+
+  supprimer(idChampionnat: string):Observable<any> {
+    return this.http.delete(this.uri+"/"+idChampionnat);
+  }
+
+  recherche(nom: string):Observable<Championnat[]> {
+    return this.http.get<Championnat[]>(this.uri+"s/"+nom);
+  }
+
   getChampionnats():Observable<Championnat[]> {
     return this.http.get<Championnat[]>(this.uri+"s");
   } 
 
   getChampionnatByNom(nom: string):Observable<Championnat> {
     return this.http.get<Championnat>(this.uri+"/nom/"+nom);
+  }
+
+  getChampionnatById(id: string):Observable<Championnat> {
+    return this.http.get<Championnat>(this.uri+"/"+id);
   }
 }

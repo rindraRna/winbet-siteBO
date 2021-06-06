@@ -1,0 +1,88 @@
+<h4>Gestion - <span class="jaune">Equipes</span></h4>
+<br/>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title"><span class="jaune">Liste</span> des équipes</strong>
+            </div>
+            <div class="card-body">
+                <button (click)="getEquipes()" class="btn btn-outline-secondary btnWarningRna"><i class="fa fa-list-ul"></i>&nbsp; Réinitialiser le tableau</button>
+                <br/>  
+                <div class="mat-elevation-z8 cardRna">
+                    <div>
+                        <form ngForm class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col col-md-7">
+                                    <label>Nom de l'équipe</label>
+                                    <input (keyup)="recherche()" [(ngModel)]="nomEquipe" name="nomEquipe" class="form-control" type="text" placeholder="Rechercher une équipe">
+                                  </div>
+                            </div>
+                        </form> 
+                    </div>
+                    <table class="table table-striped table-bordered" mat-table [dataSource]="dataSource" matSort>
+                        <ng-container matColumnDef="nom">
+                            <th mat-sort-header mat-header-cell *matHeaderCellDef> Equipe</th>
+                            <td mat-cell *matCellDef="let element"> <span (click)="champModifier(element._id)">{{ element.nom }}</span> </td>
+                        </ng-container>
+                        <ng-container matColumnDef="modifier">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                              <mat-icon (click)="champModifier(element._id)">create</mat-icon>
+                            </td>
+                          </ng-container>
+      
+                          <ng-container matColumnDef="supprimer">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                              <mat-icon (click)="supprimerEquipe(element._id)">delete</mat-icon>
+                            </td>
+                          </ng-container>
+                        
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <div class="align-center loader">
+                        <mat-spinner *ngIf="resourcesLoaded"></mat-spinner>
+                    </div>               
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title"><span class="jaune">Ajouter</span> une équipe</strong>
+            </div>
+            <div class="card-body">
+                <form ngForm class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col col-md-12">
+                            <label>Nom de l'équipe</label>
+                            <input [(ngModel)]="nomEquipeInsere" name="nomEquipeInsere" class="form-control" type="text" placeholder="Insérer le nom de l'équipe">
+                        </div>
+                    </div>
+                    <button (click)="ajoutEquipe()" class="btn btn-outline-secondary btnWarningRna btnPari"><i class="fa fa-plus"></i>&nbsp; Ajouter</button>
+                </form> 
+            </div>
+        </div>
+        <hr/><hr/>
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title"><span class="jaune">Modifier</span> une équipe</strong>
+            </div>
+            <div class="card-body">
+                <form ngForm class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col col-md-12">
+                            <label>Nom de l'équipe</label>
+                            <input id="inputModifier" [(ngModel)]="nomEquipeModifie" name="nomEquipeModifie" class="form-control" type="text" disabled="{{modifIsDisabled}}" placeholder="Séléctionner une équipe dans la liste">
+                        </div>
+                    </div>
+                    <button (click)="modifierEquipe()" class="btn btn-outline-secondary btnWarningRna btnPari"><i class="fa fa-edit"></i>&nbsp; Modifier</button>
+                </form> 
+            </div>
+        </div>
+    </div>
+</div>

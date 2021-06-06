@@ -1,0 +1,42 @@
+.btnPari{
+    width: 100%;
+}
+
+.align-center{
+    margin-left: 43%;
+}
+
+.loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #FBBD00;
+}
+
+.jaune{
+    color: #FBBD00;
+}
+
+.labelRna{
+    font-weight: 500;
+    font-size: 14.5px;
+}
+
+.labelRna2{
+    font-size: 14.5px;
+}
+
+.btnPari:hover{
+    background-color: #FBBD00;
+    color: #3C3C3C;
+    font-weight: 500;
+}
+
+.text-centre{
+    text-align: center;
+}
+
+.souligne{
+    text-decoration: underline;
+}
+
+/* ::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #FBBD00; 
+ } */

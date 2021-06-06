@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { MatchComponent } from './match/match.component';
-import { DetailsMatchComponent } from './details-match/details-match.component';
+import { DetailsMatchComponent } from './match/details-match/details-match.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {HttpClientModule} from '@angular/common/http';
@@ -17,11 +17,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
-import { AjoutMacthComponent } from './ajout-macth/ajout-macth.component';
+import { AjoutMacthComponent } from './match/ajout-macth/ajout-macth.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SnakBarAjoutComponent } from './snak-bar-ajout/snak-bar-ajout.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EquipeComponent } from './equipe/equipe.component';
+import { ChampionnatComponent } from './championnat/championnat.component';
 
 const routes:Routes = [
   {
@@ -43,6 +46,14 @@ const routes:Routes = [
   {
     path:"ajoutMatch",
     component: AjoutMacthComponent
+  },
+  {
+    path:"equipes",
+    component: EquipeComponent
+  },
+  {
+    path:"championnats",
+    component: ChampionnatComponent
   }
 ]
 
@@ -54,7 +65,9 @@ const routes:Routes = [
     MatchComponent,
     DetailsMatchComponent,
     AjoutMacthComponent,
-    SnakBarAjoutComponent
+    SnakBarAjoutComponent,
+    EquipeComponent,
+    ChampionnatComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +84,7 @@ const routes:Routes = [
     ReactiveFormsModule,
     MatSnackBarModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

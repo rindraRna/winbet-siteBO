@@ -8,15 +8,16 @@
                 <strong class="card-title">Liste des matchs</strong>
             </div>
             <div class="card-body">
-              <button routerLink="/ajoutMatch">Ajouter un match</button>
-              <button>Réinitialiser le tableau</button>
-                <div class="mat-elevation-z8 cardRna">
+              <button routerLink="/ajoutMatch" class="btn btn-outline-warning btnWarningRna"><i class="fa fa-plus"></i>&nbsp; Ajouter un match</button>
+              <button (click)="getMacths()" class="btn btn-outline-secondary espacement"><i class="fa fa-list-ul"></i>&nbsp; Réinitialiser le tableau</button>
+              <br/>  
+              <div class="mat-elevation-z8 cardRna">
                   <div>
                     <form ngForm class="form-horizontal"> 
                       <div class="row form-group">
                         <div class="col col-md-3">
                           <label>Date</label>
-                          <input (change)="rechercheMulticritere()" [(ngModel)]="date" name="date" name="nomDevoir" class="form-control" type="datetime-local" placeholder="Date">
+                          <input (change)="rechercheMulticritere()" [(ngModel)]="date" name="date" class="form-control" type="datetime-local" placeholder="Date">
                         </div>
                         <div class="col col-md-3">
                           <label>Equipe</label>
@@ -52,7 +53,7 @@
                   
                     <!-- Name Column -->
                     <ng-container matColumnDef="match">
-                      <th mat-header-cell *matHeaderCellDef> Match </th>
+                      <th mat-header-cell *matHeaderCellDef> <span class="th-jaune">Match</span> </th>
                       <td mat-cell *matCellDef="let element"> {{element.equipe1.nom}} vs {{element.equipe2.nom}} </td>
                     </ng-container>
                   
@@ -64,7 +65,7 @@
                   
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="lieu">
-                      <th mat-header-cell *matHeaderCellDef> Lieu </th>
+                      <th mat-header-cell *matHeaderCellDef> <span class="th-jaune">Lieu</span> </th>
                       <td mat-cell *matCellDef="let element"> {{element.stade}} ({{element.endroit}}) </td>
                     </ng-container>
 
@@ -75,17 +76,24 @@
 
                     <ng-container matColumnDef="modifier">
                       <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let element"><button routerLink="/detailsMatch/{{ element._id }}">M</button></td>
+                      <td mat-cell *matCellDef="let element">
+                        <mat-icon routerLink="/detailsMatch/{{ element._id }}">create</mat-icon>
+                      </td>
                     </ng-container>
 
                     <ng-container matColumnDef="supprimer">
                       <th mat-header-cell *matHeaderCellDef></th>
-                      <td mat-cell *matCellDef="let element"><button>S</button></td>
+                      <td mat-cell *matCellDef="let element">
+                        <mat-icon (click)="supprimerMatch(element._id)">delete</mat-icon>
+                      </td>
                     </ng-container>
                   
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  </table>                  
+                  </table>   
+                  <div class="align-center loader">
+                    <mat-spinner *ngIf="resourcesLoaded"></mat-spinner>
+                  </div>               
                   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                 </div>
             </div>

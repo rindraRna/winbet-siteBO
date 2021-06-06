@@ -17,6 +17,14 @@ export class MatchService {
     return this.http.post(this.uri+"s", match);
   }
 
+  modifier(match: Match_paris):Observable<any> {
+    return this.http.put(this.uri+"s", match);
+  }
+
+  supprimer(idMatch: string):Observable<any> {
+    return this.http.delete(this.uri+"/"+idMatch);
+  }
+
   getMatchs():Observable<Match_paris[]> {
     return this.http.get<Match_paris[]>(this.uri+"s");
   } 

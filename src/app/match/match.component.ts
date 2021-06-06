@@ -2,12 +2,14 @@ import { AfterViewInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Championnat } from '../model/championnat.model';
 import { Match_paris } from '../model/match_paris.model';
 import { ChampionnatService } from '../shared/championnat.service';
 import { MatchService } from '../shared/match.service';
+import { SnakBarAjoutComponent } from '../snak-bar-ajout/snak-bar-ajout.component';
 
 @Component({
   selector: 'app-match',
@@ -24,16 +26,19 @@ export class MatchComponent implements OnInit,  AfterViewInit {
   championnat ="Tous";
   etat: number = 4;
   championnats: Championnat[];
+  resourcesLoaded = true;
 
   constructor(
     private matchService: MatchService,
-    private championnatService: ChampionnatService
+    private championnatService: ChampionnatService,
+    private snackBar: MatSnackBar
   ) { 
   }
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Nombre d'élément à afficher"
   }
 
   ngOnInit(): void {
@@ -41,11 +46,27 @@ export class MatchComponent implements OnInit,  AfterViewInit {
     this.getChampionnats();
   }
 
+  supprimerMatch(idMatch){
+    var confirmation = confirm("Etes-vous sur de supprimer ce match?")
+    if(confirmation){
+      this.resourcesLoaded = true;
+      this.matchService.supprimer(idMatch)
+        .subscribe( () => {
+          this.snackBar.openFromComponent(SnakBarAjoutComponent, {
+            duration: 5000,
+          });
+          this.getMacths();
+          this.resourcesLoaded = false;
+        })
+    }
+  }
 
   getMacths(){
+    this.resourcesLoaded = true; 
     this.matchService.getMatchs()
       .subscribe(data => {
-        this.dataSource.data = data as Match_paris[];      
+        this.dataSource.data = data as Match_paris[];   
+        this.resourcesLoaded = false;   
       });
   }
 
@@ -57,6 +78,7 @@ export class MatchComponent implements OnInit,  AfterViewInit {
   }
 
   rechercheMulticritere(){
+    this.resourcesLoaded = true; 
     var equipe_cherche = this.equipe;
     var championnat_cherche = this.championnat;
     if(this.date === undefined) this.date = null;
@@ -66,12 +88,14 @@ export class MatchComponent implements OnInit,  AfterViewInit {
       this.matchService.rechercheMulticritere(this.date, equipe_cherche, championnat_cherche, this.etat)
       .subscribe(data => {
         this.dataSource.data = data as Match_paris[];
+        this.resourcesLoaded = false;
       })
     }
     if(this.etat == 4){
       this.matchService.rechercheMulticritereSansEtat(this.date, equipe_cherche, championnat_cherche)
       .subscribe(data => {
         this.dataSource.data = data as Match_paris[];
+        this.resourcesLoaded = false;
       })
     }
   }
