@@ -18,7 +18,7 @@ export class PariService {
   } 
 
   getPariByIdMatch(idMatch):Observable<Pari[]> {
-    return this.http.get<Pari[]>(this.uri+"/"+idMatch);
+    return this.http.get<Pari[]>(this.uri+"/match/id/"+idMatch);
   } 
 
   modifier(pari: Pari):Observable<any> {

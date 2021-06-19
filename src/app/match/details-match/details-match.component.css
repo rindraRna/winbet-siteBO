@@ -40,3 +40,15 @@
     color: #3C3C3C;
     font-weight: 500;
 }
+
+.noAction{
+    cursor: context-menu !important;
+}
+
+.attention{
+    text-align: center;
+    color: black;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+}

@@ -143,6 +143,7 @@ export class AjoutMacthComponent implements OnInit {
               pari1.valeur = this.equipe1;
               pari1.cote = this.coteVainqueur1;
               pari1.mise = 0;
+              pari1.resultat = 0;
               pari1.gain = 0;
               // insertion pari vainqueur1
               this.pariService.ajout(pari1)
@@ -154,6 +155,7 @@ export class AjoutMacthComponent implements OnInit {
                 pari2.valeur = "null";
                 pari2.cote = this.coteVainqueur2;
                 pari2.mise = 0;
+                pari2.resultat = 0;
                 pari2.gain = 0;
                 // insertion pari vainqueur2
                 this.pariService.ajout(pari2)
@@ -165,6 +167,7 @@ export class AjoutMacthComponent implements OnInit {
                   pari3.valeur = this.equipe2;
                   pari3.cote = this.coteVainqueur3;
                   pari3.mise = 0;
+                  pari3.resultat = 0;
                   pari3.gain = 0;
                   // insertion pari vainqueur3
                   this.pariService.ajout(pari3)
@@ -176,6 +179,7 @@ export class AjoutMacthComponent implements OnInit {
                     pari4.valeur = "Oui";
                     pari4.cote = this.coteMarquage1;
                     pari4.mise = 0;
+                    pari4.resultat = 0;
                     pari4.gain = 0;
                     // insertion pari vainqueur4
                     this.pariService.ajout(pari4)
@@ -187,6 +191,7 @@ export class AjoutMacthComponent implements OnInit {
                       pari5.valeur = "Non";
                       pari5.cote = this.coteMarquage2;
                       pari5.mise = 0;
+                      pari5.resultat = 0;
                       pari5.gain = 0;
                       // insertion pari vainqueur5
                       this.pariService.ajout(pari5)
@@ -218,5 +223,21 @@ export class AjoutMacthComponent implements OnInit {
       
     })
     // ajout match
+  }
+
+  verificationCote(cote){
+    var regexp = /^\d+\.?\d{0,2}$/;
+    if(!regexp.test(cote)){
+      alert("Veuillez entrer une valeur de cote avec deux (2) chiffres après la virgule au maximum");
+    }
+    if(Number(cote) <= 1){
+      alert("La cote doit être supérieur à 1");
+    }
+  }
+
+  verificationInfo(info){
+    if(info == ""){
+      alert("Veuillez remplir tous les champs");
+    }
   }
 }

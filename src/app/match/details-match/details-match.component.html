@@ -21,7 +21,7 @@
                         <h6>{{titres[0]}}</h6>
                         <div class="row">
                             <div *ngFor="let parisVainqueur of parisVainqueurs" class="col-md-4">
-                                <button (click)="pari($event, 0)" type="button" class="btn btn-outline-secondary btnPari">{{ parisVainqueur.valeur }}
+                                <button type="button" class="btn btn-outline-secondary btnPari noAction">{{ parisVainqueur.valeur }}
                                     <span class="badge badge-light">{{ parisVainqueur.cote }}</span>
                                 </button>
                             </div>
@@ -30,10 +30,48 @@
                         <h6>{{titres[1]}}</h6>
                         <div class="row">
                             <div *ngFor="let parisMarque of parisMarques" class="col-md-6">
-                                <button (click)="pari($event, 1)" type="button" class="btn btn-outline-secondary btnPari">{{ parisMarque.valeur }}
+                                <button type="button" class="btn btn-outline-secondary btnPari noAction">{{ parisMarque.valeur }}
                                     <span class="badge badge-light">{{ parisMarque.cote }}</span>
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div *ngIf="this.etat == 2"> 
+                    <div class="card-header">
+                        <strong class="card-title mb-3"><span class="jaune">Résultats</span> des paris</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <form ngForm class="form-horizontal topRna">  
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label class="form-control-label labelRna">Vainqueur</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select [(ngModel)]="resultatVainqueur" name="resultatVainqueur" class="form-control">
+                                            <option value="{{this.match.equipe1.nom}}">{{this.match.equipe1.nom}}</option>
+                                            <option value="null">null</option>
+                                            <option value="{{this.match.equipe2.nom}}">{{this.match.equipe2.nom}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label class="form-control-label labelRna">Les deux équipes marquent</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select [(ngModel)]="resultatMarque" name="resultatMarque" class="form-control">
+                                            <option value="Oui">Oui</option>
+                                            <option value="Non">Non</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="attention"><span class="jaune">Attention: </span>La validation du résultat est irréversible</p>
+                                <button *ngIf="!dejaValider" (click)="traitementResultat()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Valider</button>
+                                <button *ngIf="dejaValider" disabled title="Vous avez déjà valider le résultat" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Valider</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -173,14 +211,15 @@
                                         </div>  
                                         <div class="row form-group">
                                             <div class="col-md-12">
-                                                <label class="form-control-label labelRna">Commentaire</label>
+                                                <label class="form-control-label labelRna">Résumé</label>
                                             </div>
                                             <div class="col-md-12">
-                                                <textarea [(ngModel)]="statut" name="statut" class="form-control" rows="8" placeholder="Entrer ici le commentaire du match">{{statut}}</textarea>
+                                                <textarea [(ngModel)]="statut" name="statut" class="form-control" rows="8" placeholder="Entrer ici le résumé du match">{{statut}}</textarea>
                                             </div>
                                         </div>
                                         <hr/>
-                                        <button (click)="modifierInfoGeneral()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                        <button *ngIf="this.etat != 2" (click)="modifierInfoGeneral()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                        <button *ngIf="this.etat == 2" disabled title="Lorque l'état est 'Terminé', veuillez valider le formulaire dans 'Résultats des paris'. Cette validation enregistrera le vainqueur du match, le résultat si les deux équipes marquent et le résumé du match. Cette action permet aussi d'encaisser les comptes des utilisateurs ayant gagné leurs paris" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
                                     </form>
                                 </mat-tab>
                             </mat-tab-group>

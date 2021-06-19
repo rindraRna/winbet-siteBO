@@ -134,7 +134,7 @@
                                                 <label class="form-control-label labelRna">Date</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input formControlName="dateEtHeure" [(ngModel)]="dateEtHeure" name="dateEtHeure" type="datetime-local"  class="form-control" />
+                                                <input formControlName="dateEtHeure" [(ngModel)]="dateEtHeure" name="dateEtHeure" type="datetime-local"  class="form-control" (change)="verificationInfo(dateEtHeure)"/>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -142,7 +142,7 @@
                                                 <label class="form-control-label labelRna">Stade</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input formControlName="stade" [(ngModel)]="stade" name="stade" type="text" class="form-control" placeholder="Entrer le stade"/>
+                                                <input formControlName="stade" [(ngModel)]="stade" name="stade" type="text" class="form-control" placeholder="Entrer le stade" (change)="verificationInfo(stade)"/>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -150,7 +150,7 @@
                                                 <label class="form-control-label labelRna">Pays</label>
                                             </div>
                                             <div class="col-md-8">
-                                                <input formControlName="pays" [(ngModel)]="pays" name="pays" type="text" class="form-control" placeholder="Entrer le pays"/>
+                                                <input formControlName="pays" [(ngModel)]="pays" name="pays" type="text" class="form-control" placeholder="Entrer le pays" (change)="verificationInfo(pays)"/>
                                             </div>
                                         </div>
                                         <hr/>
@@ -167,7 +167,7 @@
                                                 <label class="form-control-label labelRna2">{{equipe1}}</label>
                                             </div>
                                             <div class="col-md-5">
-                                                <input formControlName="coteVainqueur1" [(ngModel)]="coteVainqueur1" name="coteVainqueur1" type="number" class="form-control"/>
+                                                <input formControlName="coteVainqueur1" [(ngModel)]="coteVainqueur1" name="coteVainqueur1" type="number" class="form-control" (change)="verificationCote(coteVainqueur1)"/>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -175,7 +175,7 @@
                                                 <label class="form-control-label labelRna2">null</label>
                                             </div>
                                             <div class="col-md-5">
-                                                <input formControlName="coteVainqueur2" [(ngModel)]="coteVainqueur2" name="coteVainqueur2" type="number" class="form-control" />
+                                                <input formControlName="coteVainqueur2" [(ngModel)]="coteVainqueur2" name="coteVainqueur2" type="number" class="form-control" (change)="verificationCote(coteVainqueur2)" />
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -183,7 +183,7 @@
                                                 <label class="form-control-label labelRna2">{{equipe2}}</label>
                                             </div>
                                             <div class="col-md-5">
-                                                <input formControlName="coteVainqueur3" [(ngModel)]="coteVainqueur3" name="coteVainqueur3" type="number" class="form-control" />
+                                                <input formControlName="coteVainqueur3" [(ngModel)]="coteVainqueur3" name="coteVainqueur3" type="number" class="form-control" (change)="verificationCote(coteVainqueur3)"/>
                                             </div>
                                         </div>
                                         <h6>Les deux équipes marquent</h6>
@@ -192,7 +192,7 @@
                                                 <label class="form-control-label labelRna2">Oui</label>
                                             </div>
                                             <div class="col-md-5">
-                                                <input formControlName="coteMarquage1" [(ngModel)]="coteMarquage1" name="coteMarquage1" type="number" class="form-control"/>
+                                                <input formControlName="coteMarquage1" [(ngModel)]="coteMarquage1" name="coteMarquage1" type="number" class="form-control" (change)="verificationCote(coteMarquage1)"/>
                                             </div>
                                         </div>
                                         <div class="row form-group">
@@ -200,7 +200,7 @@
                                                 <label class="form-control-label labelRna2">Non</label>
                                             </div>
                                             <div class="col-md-5">
-                                                <input formControlName="coteMarquage2" [(ngModel)]="coteMarquage2" name="coteMarquage2" type="number" class="form-control" />
+                                                <input formControlName="coteMarquage2" [(ngModel)]="coteMarquage2" name="coteMarquage2" type="number" class="form-control" (change)="verificationCote(coteMarquage2)" />
                                             </div>
                                         </div>
                                         <hr/>
