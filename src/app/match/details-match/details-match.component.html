@@ -44,34 +44,38 @@
                     </div>
                     <div class="card-body">
                         <div class="card-text">
-                            <form ngForm class="form-horizontal topRna">  
-                                <div class="row form-group">
-                                    <div class="col-md-6">
-                                        <label class="form-control-label labelRna">Vainqueur</label>
+                            <div *ngIf="!dejaValider">
+                                <form ngForm class="form-horizontal topRna">  
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label labelRna">Vainqueur</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select [(ngModel)]="resultatVainqueur" name="resultatVainqueur" class="form-control">
+                                                <option value="{{this.match.equipe1.nom}}">{{this.match.equipe1.nom}}</option>
+                                                <option value="null" selected="selected">null</option>
+                                                <option value="{{this.match.equipe2.nom}}">{{this.match.equipe2.nom}}</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <select [(ngModel)]="resultatVainqueur" name="resultatVainqueur" class="form-control">
-                                            <option value="{{this.match.equipe1.nom}}">{{this.match.equipe1.nom}}</option>
-                                            <option value="null">null</option>
-                                            <option value="{{this.match.equipe2.nom}}">{{this.match.equipe2.nom}}</option>
-                                        </select>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label labelRna">Les deux équipes marquent</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select [(ngModel)]="resultatMarque" name="resultatMarque" class="form-control">
+                                                <option value="Oui">Oui</option>
+                                                <option value="Non">Non</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-md-6">
-                                        <label class="form-control-label labelRna">Les deux équipes marquent</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <select [(ngModel)]="resultatMarque" name="resultatMarque" class="form-control">
-                                            <option value="Oui">Oui</option>
-                                            <option value="Non">Non</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <p class="attention"><span class="jaune">Attention: </span>La validation du résultat est irréversible</p>
-                                <button *ngIf="!dejaValider" (click)="traitementResultat()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Valider</button>
-                                <button *ngIf="dejaValider" disabled title="Vous avez déjà valider le résultat" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Valider</button>
-                            </form>
+                                    <p class="attention"><span class="jaune">Attention: </span>La validation du résultat est irréversible</p>
+                                    <button (click)="traitementResultat()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Valider</button>
+                                </form>
+                            </div>
+                            <div *ngIf="dejaValider">
+                                <h5 class="text-sm-center mt-2 mb-1 resultat">{{statut}}</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -219,7 +223,8 @@
                                         </div>
                                         <hr/>
                                         <button *ngIf="this.etat != 2" (click)="modifierInfoGeneral()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
-                                        <button *ngIf="this.etat == 2" disabled title="Lorque l'état est 'Terminé', veuillez valider le formulaire dans 'Résultats des paris'. Cette validation enregistrera le vainqueur du match, le résultat si les deux équipes marquent et le résumé du match. Cette action permet aussi d'encaisser les comptes des utilisateurs ayant gagné leurs paris" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                        <button *ngIf="this.etat == 2 && !dejaValider" disabled title="Lorque l'état est 'Terminé', veuillez valider le formulaire dans 'Résultats des paris'. Cette validation enregistrera le vainqueur du match, le résultat si les deux équipes marquent et le résumé du match. Cette action permet aussi d'encaisser les comptes des utilisateurs ayant gagné leurs paris" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                        <button *ngIf="this.etat == 2 && dejaValider" disabled title="Lorque le résultat a été validé, cette modification n'est plus disponible" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
                                     </form>
                                 </mat-tab>
                             </mat-tab-group>

@@ -1,0 +1,53 @@
+.jaune{
+    color: #FBBD00
+}
+
+.btnWarningRna{
+    background-color: #FBBD00;
+    color: black;
+}
+
+.espacement{
+    margin-left: 5px;
+}
+
+.cardRna{
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+label{
+    font-weight: 500;
+}
+
+th{
+    font-size: 14px;
+    color: black;
+}
+
+.th-jaune{
+    font-size: 16px;
+    color: #FBBD00;
+}
+
+.loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #FBBD00;
+}
+
+.align-center{
+    margin-left: 43%;
+}
+
+.btnPari{
+    width: 100%;
+}
+
+.icon-jaune {
+    color: #FBBD00;
+}
+
+.alignementDroite{
+    text-align: right;
+}

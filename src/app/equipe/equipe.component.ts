@@ -50,6 +50,7 @@ export class EquipeComponent implements OnInit {
           duration: 5000,
         });
         this.getEquipes();
+        this.nomEquipe = "";
         this.resourcesLoaded = false;
       })
   }
@@ -65,6 +66,7 @@ export class EquipeComponent implements OnInit {
           duration: 5000,
         });
         this.getEquipes();
+        this.nomEquipe = "";
         this.resourcesLoaded = false;
       })
   }

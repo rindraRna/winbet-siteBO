@@ -110,9 +110,11 @@ export class DetailsMatchComponent implements OnInit {
           console.log("pari vainqueur perdu: "+tabResultatVainqueur[i]);
           this.pariPanierService.getPariByIdMatchAndValeur(this.match._id, tabResultatVainqueur[i])
           .subscribe( pariPanierPerdu => {
-            for(var j = 0; j < 2; j++){
+            const taillePariPanierPerdu = pariPanierPerdu.length;
+            for(var j = 0; j < taillePariPanierPerdu; j++){
               if(pariPanierPerdu[j] !== undefined){
-                //resultat = 2 pour pai perdu
+                // console.log("valeur pariPanierPerdu non undefined: "+pariPanierPerdu[j].pari.valeur+"; resultat pariPanierPerdu non undefined: "+pariPanierPerdu[j].pari.resultat);
+                // resultat = 2 pour pari perdu
                 pariPanierPerdu[j].pari.resultat = 2;
                 this.pariPanierService.modifier(pariPanierPerdu[j])
                 .subscribe();
@@ -122,17 +124,22 @@ export class DetailsMatchComponent implements OnInit {
         }
       }
   
+      // modifier resultat pari marque perdant
       const tabResultatMarque = ["Oui", "Non"];
       for(var i = 0; i < 2; i++){
         if(tabResultatMarque[i] !== this.resultatMarque){
           console.log("pari marque perdu: "+tabResultatMarque[i]);
           this.pariPanierService.getPariByIdMatchAndValeur(this.match._id, tabResultatMarque[i])
           .subscribe( pariPanierPerdu => {
-            if(pariPanierPerdu[0] !== undefined){
-              //resultat = 2 pour pai perdu
-              pariPanierPerdu[0].pari.resultat = 2;
-              this.pariPanierService.modifier(pariPanierPerdu[0])
-              .subscribe();
+            const taillePariPanierPerdu = pariPanierPerdu.length;
+            for(var j = 0; j < taillePariPanierPerdu; j++){
+              if(pariPanierPerdu[j] !== undefined){
+                // console.log("valeur pariPanierPerdu non undefined: "+pariPanierPerdu[j].pari.valeur+"; resultat pariPanierPerdu non undefined: "+pariPanierPerdu[j].pari.resultat);
+                //resultat = 2 pour pai perdu
+                pariPanierPerdu[j].pari.resultat = 2;
+                this.pariPanierService.modifier(pariPanierPerdu[j])
+                .subscribe();
+              }
             }
           });
         }
@@ -165,15 +172,18 @@ export class DetailsMatchComponent implements OnInit {
     var coteOui = inputOui.value;
     var coteNon = inputNon.value;
     var regexp = /^\d+\.?\d{0,2}$/;
+    var envoiValide = true;
     if(!regexp.test(coteEquipe1) || !regexp.test(coteNull) || !regexp.test(coteEquipe2) || !regexp.test(coteOui) || !regexp.test(coteNon)){
       alert("Veuillez entrer une valeur de cote avec deux (2) chiffres après la virgule au maximum");
       this.resourcesLoaded = false;
+      envoiValide = false;
     }
     if(Number(coteEquipe1) <= 1 || Number(coteNull) <= 1 || Number(coteEquipe2) <= 1 || Number(coteOui) <= 1 || Number(coteNon) <= 1){
       alert("La cote doit être supérieur à 1");
       this.resourcesLoaded = false;
+      envoiValide = false;
     }
-    else{
+    if(envoiValide){
       this.pariService.getPariByIdMatchAndValeur(this.idMatch, this.match.equipe1.nom)
       .subscribe( pariEquipe1 => {
         pariEquipe1.cote = +coteEquipe1;
@@ -227,7 +237,7 @@ export class DetailsMatchComponent implements OnInit {
           this.match.equipe2._id = this.equipe2;
           this.match.equipe2.nom = equipe2.nom;
         });
-        this.match.etat = this.etat;
+        // this.match.etat = this.etat;
         this.match.date = new Date(this.dateEtHeure);
         this.match.stade = this.stade;
         this.match.endroit = this.pays;
@@ -283,7 +293,7 @@ export class DetailsMatchComponent implements OnInit {
       .subscribe(data => {
         this.match = data; 
         this.etat = data.etat;
-        this.dateEtHeure = (moment(data.date)).format('yyyy-MM-DDThh:mm') ;
+        this.dateEtHeure = (moment(data.date)).format('yyyy-MM-DDTHH:mm') ;
         this.stade = data.stade;
         this.pays = data.endroit;
         this.equipe1 = data.equipe1._id;

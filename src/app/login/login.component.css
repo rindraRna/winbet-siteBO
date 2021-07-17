@@ -30,5 +30,18 @@
 }
 
 .bg-rna{
-    background-color: red;
+    padding-bottom: 15%;
+}
+
+.loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #FBBD00;
+}
+
+.align-center{
+    margin-left: 43%;
+    margin-top: 10px;
+}
+
+.coms{
+    text-align: center;
 }

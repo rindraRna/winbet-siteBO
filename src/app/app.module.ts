@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -16,15 +16,20 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatTabsModule } from '@angular/material/tabs';
+import {MatTabsModule} from '@angular/material/tabs';
 import { AjoutMacthComponent } from './match/ajout-macth/ajout-macth.component';
 import {MatStepperModule} from '@angular/material/stepper';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { SnakBarAjoutComponent } from './snak-bar-ajout/snak-bar-ajout.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EquipeComponent } from './equipe/equipe.component';
 import { ChampionnatComponent } from './championnat/championnat.component';
+import { ChartsModule } from 'ng2-charts';
+import { UtilisateurComponent } from './utilisateur/utilisateur.component';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr);
 
 const routes:Routes = [
   {
@@ -54,6 +59,10 @@ const routes:Routes = [
   {
     path:"championnats",
     component: ChampionnatComponent
+  },
+  {
+    path:"utilisateurs",
+    component: UtilisateurComponent
   }
 ]
 
@@ -67,7 +76,8 @@ const routes:Routes = [
     AjoutMacthComponent,
     SnakBarAjoutComponent,
     EquipeComponent,
-    ChampionnatComponent
+    ChampionnatComponent,
+    UtilisateurComponent
   ],
   imports: [
     BrowserModule,
@@ -85,9 +95,12 @@ const routes:Routes = [
     MatSnackBarModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    ChartsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'fr-FR'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

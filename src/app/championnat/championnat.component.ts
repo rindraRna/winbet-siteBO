@@ -51,6 +51,7 @@ export class ChampionnatComponent implements OnInit {
           duration: 5000,
         });
         this.getChampionnnats();
+        this.nomChampionnat = "";
         this.resourcesLoaded = false;
       })
   }
@@ -66,6 +67,7 @@ export class ChampionnatComponent implements OnInit {
           duration: 5000,
         });
         this.getChampionnnats();
+        this.nomChampionnat = "";
         this.resourcesLoaded = false;
       })
   }

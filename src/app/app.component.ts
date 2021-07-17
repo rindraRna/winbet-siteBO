@@ -9,6 +9,7 @@ import * as $ from 'jquery';
 })
 export class AppComponent implements OnInit{
   sessionConnecte = sessionStorage.getItem('token');
+  nomUser = sessionStorage.getItem('nomUser');
 
   constructor(
     private router: Router
@@ -16,6 +17,14 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     // this.router.navigate(['/accueil']);
+  }
+
+  deconnexion(){
+    sessionStorage.removeItem('nomUser');
+    sessionStorage.removeItem('token');
+    this.router.navigate(['/']).then(() => { 
+      window.location.reload();
+    });
   }
 
   menuToggle(){

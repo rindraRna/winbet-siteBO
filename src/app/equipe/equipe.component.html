@@ -80,7 +80,8 @@
                             <input id="inputModifier" [(ngModel)]="nomEquipeModifie" name="nomEquipeModifie" class="form-control" type="text" disabled="{{modifIsDisabled}}" placeholder="Séléctionner une équipe dans la liste">
                         </div>
                     </div>
-                    <button (click)="modifierEquipe()" class="btn btn-outline-secondary btnWarningRna btnPari"><i class="fa fa-edit"></i>&nbsp; Modifier</button>
+                    <button *ngIf="modifIsDisabled" disabled title="Veuillez séléctionner une équipe dans la liste" class="btn btn-outline-secondary btnWarningRna btnPari"><i class="fa fa-edit"></i>&nbsp; Modifier</button>
+                    <button *ngIf="!modifIsDisabled" (click)="modifierEquipe()" class="btn btn-outline-secondary btnWarningRna btnPari"><i class="fa fa-edit"></i>&nbsp; Modifier</button>
                 </form> 
             </div>
         </div>
