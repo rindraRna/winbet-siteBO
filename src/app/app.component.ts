@@ -22,9 +22,9 @@ export class AppComponent implements OnInit{
   deconnexion(){
     sessionStorage.removeItem('nomUser');
     sessionStorage.removeItem('token');
-    this.router.navigate(['/']).then(() => { 
+    // this.router.navigate(['/']).then(() => { 
       window.location.reload();
-    });
+    // });
   }
 
   menuToggle(){

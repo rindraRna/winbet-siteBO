@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Championnat } from '../../model/championnat.model';
-import { Equipe } from '../../model/equipe.model';
-import { Match_paris } from '../../model/match_paris.model';
-import { Pari } from '../../model/pari.model';
-import { ChampionnatService } from '../../shared/championnat.service';
-import { EquipeService } from '../../shared/equipe.service';
-import { MatchService } from '../../shared/match.service';
-import { PariService } from '../../shared/pari.service';
-import { TypeService } from '../../shared/type.service';
+import { Championnat } from '../../../model/championnat.model';
+import { Equipe } from '../../../model/equipe.model';
+import { Match_paris } from '../../../model/match_paris.model';
+import { Pari } from '../../../model/pari.model';
+import { ChampionnatService } from '../../../shared/championnat.service';
+import { EquipeService } from '../../../shared/equipe.service';
+import { MatchService } from '../../../shared/match.service';
+import { PariService } from '../../../shared/pari.service';
+import { TypeService } from '../../../shared/type.service';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnakBarAjoutComponent } from 'src/app/snak-bar-ajout/snak-bar-ajout.component';
+import { SnakBarAjoutComponent } from 'src/app/components/snak-bar-ajout/snak-bar-ajout.component';
 import { PariPanierService } from 'src/app/shared/pari-panier.service';
 import { CompteService } from 'src/app/shared/compte.service';
 
@@ -68,6 +68,7 @@ export class DetailsMatchComponent implements OnInit {
     this.resourcesLoaded = true;
     if(this.statut == ""){
       alert("Veuillez remplir le résumé du match");
+      this.resourcesLoaded = false;
     }
     else{
       // resultat vainqueur
@@ -107,7 +108,6 @@ export class DetailsMatchComponent implements OnInit {
       const tabResultatVainqueur = [this.match.equipe1.nom, "null", this.match.equipe2.nom];
       for(var i = 0; i < 3; i++){
         if(tabResultatVainqueur[i] !== this.resultatVainqueur){
-          console.log("pari vainqueur perdu: "+tabResultatVainqueur[i]);
           this.pariPanierService.getPariByIdMatchAndValeur(this.match._id, tabResultatVainqueur[i])
           .subscribe( pariPanierPerdu => {
             const taillePariPanierPerdu = pariPanierPerdu.length;
@@ -128,7 +128,6 @@ export class DetailsMatchComponent implements OnInit {
       const tabResultatMarque = ["Oui", "Non"];
       for(var i = 0; i < 2; i++){
         if(tabResultatMarque[i] !== this.resultatMarque){
-          console.log("pari marque perdu: "+tabResultatMarque[i]);
           this.pariPanierService.getPariByIdMatchAndValeur(this.match._id, tabResultatMarque[i])
           .subscribe( pariPanierPerdu => {
             const taillePariPanierPerdu = pariPanierPerdu.length;
@@ -222,6 +221,16 @@ export class DetailsMatchComponent implements OnInit {
     }
   }
 
+  modifierAutre(){
+    this.resourcesLoaded = true;
+    this.match.etat = this.etat;
+    this.match.statut = this.statut;
+    this.matchService.modifier(this.match)
+    .subscribe( () => {
+      this.resourcesLoaded = false;
+    })
+  }
+
   modifierInfoGeneral(){
     if(this.stade == "" || this.pays == "" || this.dateEtHeure == ""){
       alert("Veuillez remplir tous les champs");
@@ -249,11 +258,9 @@ export class DetailsMatchComponent implements OnInit {
           this.matchService.modifier(this.match)
           .subscribe( () => {
             // debut modifier pari du match
-            console.log("idMatch: "+this.match._id);
             this.pariService.getPariByIdMatch(this.match._id)
             .subscribe( paris => {
               const nbParis = paris.length;
-              console.log("nbParis: "+nbParis);
               var valeurs = [this.match.equipe1.nom, "null", this.match.equipe2.nom, "Oui", "Non"];
               for(var i = 0; i < nbParis; i++){
                 paris[i].match = this.match;

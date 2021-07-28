@@ -35,13 +35,11 @@ export class MatchService {
 
   rechercheMulticritere(date: Date, equipe: string, championnat: string, etat: number):Observable<Match_paris[]> {
     const uriComplet = this.uri+"s/"+date+"/"+equipe+"/"+championnat+"/"+etat;
-    console.log("uriComplet: "+uriComplet)
     return this.http.get<Match_paris[]>(uriComplet);
   }
 
   rechercheMulticritereSansEtat(date: Date, equipe: string, championnat: string):Observable<Match_paris[]> {
     const uriComplet = this.uri+"s/"+date+"/"+equipe+"/"+championnat;
-    console.log("uriComplet sans etat: "+uriComplet)
     return this.http.get<Match_paris[]>(uriComplet);
   }
 }

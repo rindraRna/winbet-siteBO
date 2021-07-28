@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Championnat } from '../model/championnat.model';
-import { Equipe } from '../model/equipe.model';
-import { Match_paris } from '../model/match_paris.model';
-import { Pari } from '../model/pari.model';
-import { Type } from '../model/type.model';
-import { ChampionnatService } from '../shared/championnat.service';
-import { EquipeService } from '../shared/equipe.service';
-import { MatchService } from '../shared/match.service';
-import { PariService } from '../shared/pari.service';
-import { SnakBarAjoutComponent } from '../snak-bar-ajout/snak-bar-ajout.component';
+import { Championnat } from '../../../model/championnat.model';
+import { Equipe } from '../../../model/equipe.model';
+import { Match_paris } from '../../../model/match_paris.model';
+import { Pari } from '../../../model/pari.model';
+import { Type } from '../../../model/type.model';
+import { ChampionnatService } from '../../../shared/championnat.service';
+import { EquipeService } from '../../../shared/equipe.service';
+import { MatchService } from '../../../shared/match.service';
+import { PariService } from '../../../shared/pari.service';
+import { SnakBarAjoutComponent } from '../../snak-bar-ajout/snak-bar-ajout.component';
 
 @Component({
   selector: 'app-ajout-macth',
@@ -35,6 +35,7 @@ export class AjoutMacthComponent implements OnInit {
   coteMarquage1 = 0;
   coteMarquage2 = 0;
   afficherParis = false;
+  resourcesLoaded = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -85,9 +86,7 @@ export class AjoutMacthComponent implements OnInit {
   }
 
   ajoutMatchEtParis(){
-    console.log("ajoutMatchEtParis");
-    console.log("equipe1: "+this.equipe1);
-    console.log("equipe1: "+this.equipe2);
+    this.resourcesLoaded = true;
     // ajout match
     this.equipeService.getEquipeByNom(this.equipe1)
     .subscribe(equipe1 => {
@@ -117,8 +116,6 @@ export class AjoutMacthComponent implements OnInit {
           match.championnat.nom = championnat.nom;
           // get championnat
           match.statut = "";
-          console.log("Match: ")
-          console.log("equipe1:{_id: "+match.equipe1._id+",nom:"+match.equipe1.nom+"},equipe2:{_id:"+match.equipe2._id+",nom:"+match.equipe2.nom+"},etat:{"+match.etat+"},date:{"+match.date+"},stade:"+match.stade+", endroit:"+match.endroit+",championnat:{_id:"+match.championnat._id+",nom:"+match.championnat.nom+"},statut");
           // creation match
           // ajout match
           this.matchService.ajoutMatch(match)
@@ -144,6 +141,7 @@ export class AjoutMacthComponent implements OnInit {
               pari1.valeur = this.equipe1;
               pari1.cote = this.coteVainqueur1;
               pari1.mise = 0;
+              pari1.resultat = 0;
               pari1.gain = 0;
               // insertion pari vainqueur1
               this.pariService.ajout(pari1)
@@ -155,6 +153,7 @@ export class AjoutMacthComponent implements OnInit {
                 pari2.valeur = "null";
                 pari2.cote = this.coteVainqueur2;
                 pari2.mise = 0;
+                pari2.resultat = 0;
                 pari2.gain = 0;
                 // insertion pari vainqueur2
                 this.pariService.ajout(pari2)
@@ -166,6 +165,7 @@ export class AjoutMacthComponent implements OnInit {
                   pari3.valeur = this.equipe2;
                   pari3.cote = this.coteVainqueur3;
                   pari3.mise = 0;
+                  pari3.resultat = 0;
                   pari3.gain = 0;
                   // insertion pari vainqueur3
                   this.pariService.ajout(pari3)
@@ -177,6 +177,7 @@ export class AjoutMacthComponent implements OnInit {
                     pari4.valeur = "Oui";
                     pari4.cote = this.coteMarquage1;
                     pari4.mise = 0;
+                    pari4.resultat = 0;
                     pari4.gain = 0;
                     // insertion pari vainqueur4
                     this.pariService.ajout(pari4)
@@ -188,6 +189,7 @@ export class AjoutMacthComponent implements OnInit {
                       pari5.valeur = "Non";
                       pari5.cote = this.coteMarquage2;
                       pari5.mise = 0;
+                      pari5.resultat = 0;
                       pari5.gain = 0;
                       // insertion pari vainqueur5
                       this.pariService.ajout(pari5)
@@ -195,6 +197,7 @@ export class AjoutMacthComponent implements OnInit {
                         this.snackBar.openFromComponent(SnakBarAjoutComponent, {
                           duration: 5000,
                         });
+                        this.resourcesLoaded = false;
                       });
                       // insertion pari vainqueur5
                       // création pari vainqueur5
@@ -218,6 +221,21 @@ export class AjoutMacthComponent implements OnInit {
       
     })
     // ajout match
-    
+  }
+
+  verificationCote(cote){
+    var regexp = /^\d+\.?\d{0,2}$/;
+    if(!regexp.test(cote)){
+      alert("Veuillez entrer une valeur de cote avec deux (2) chiffres après la virgule au maximum");
+    }
+    if(Number(cote) <= 1){
+      alert("La cote doit être supérieur à 1");
+    }
+  }
+
+  verificationInfo(info){
+    if(info == ""){
+      alert("Veuillez remplir tous les champs");
+    }
   }
 }

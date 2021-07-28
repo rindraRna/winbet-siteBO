@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { CompteService } from '../shared/compte.service';
-import { PanierService } from '../shared/panier.service';
-import { PariPanierService } from '../shared/pari-panier.service';
+import { CompteService } from '../../shared/compte.service';
+import { PanierService } from '../../shared/panier.service';
+import { PariPanierService } from '../../shared/pari-panier.service';
 
 @Component({
   selector: 'app-accueil',

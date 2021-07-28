@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Compte } from '../model/compte.model';
-import { CompteService } from '../shared/compte.service';
+import { Compte } from '../../model/compte.model';
+import { CompteService } from '../../shared/compte.service';
 import { SnakBarAjoutComponent } from '../snak-bar-ajout/snak-bar-ajout.component';
 
 @Component({

@@ -10,6 +10,9 @@
                 </div>
                 <div class="card-body">
                     <div class="mx-auto d-block">
+                        <div class="align-center loader">
+                            <mat-spinner *ngIf="resourcesLoaded"></mat-spinner>
+                        </div>
                         <h5 class="text-sm-center mt-2 mb-1">{{match.equipe1.nom}} vs {{match.equipe2.nom}}</h5>
                         <div class="location text-sm-center"><i class="fa fa-map-marker"></i> {{ match.stade }}, {{ match.endroit }} - {{ match.date | date }} - {{ match.date | date: 'HH:mm' }}</div>
                     </div>
@@ -18,7 +21,7 @@
                         <h6>{{titres[0]}}</h6>
                         <div class="row">
                             <div *ngFor="let parisVainqueur of parisVainqueurs" class="col-md-4">
-                                <button (click)="pari($event, 0)" type="button" class="btn btn-outline-secondary btnPari">{{ parisVainqueur.valeur }}
+                                <button type="button" class="btn btn-outline-secondary btnPari noAction">{{ parisVainqueur.valeur }}
                                     <span class="badge badge-light">{{ parisVainqueur.cote }}</span>
                                 </button>
                             </div>
@@ -27,26 +30,53 @@
                         <h6>{{titres[1]}}</h6>
                         <div class="row">
                             <div *ngFor="let parisMarque of parisMarques" class="col-md-6">
-                                <button (click)="pari($event, 1)" type="button" class="btn btn-outline-secondary btnPari">{{ parisMarque.valeur }}
+                                <button type="button" class="btn btn-outline-secondary btnPari noAction">{{ parisMarque.valeur }}
                                     <span class="badge badge-light">{{ parisMarque.cote }}</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <strong class="card-title mb-3">Statistique actuel sur ce match</strong>
-                </div>
-                <div class="card-body">
-                    <div class="card-text">
-                        <div class="row">
-                            <h6 class="col-md-6">Nombre de paris versés:</h6>
-                            <h6 class="col-md-6">Total des montants des paris:</h6>
+                <hr/>
+                <div *ngIf="this.etat == 2"> 
+                    <div class="card-header">
+                        <strong class="card-title mb-3"><span class="jaune">Résultats</span> des paris</strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div *ngIf="!dejaValider">
+                                <form ngForm class="form-horizontal topRna">  
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label labelRna">Vainqueur</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select [(ngModel)]="resultatVainqueur" name="resultatVainqueur" class="form-control">
+                                                <option value="{{this.match.equipe1.nom}}">{{this.match.equipe1.nom}}</option>
+                                                <option value="null" selected="selected">null</option>
+                                                <option value="{{this.match.equipe2.nom}}">{{this.match.equipe2.nom}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label class="form-control-label labelRna">Les deux équipes marquent</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select [(ngModel)]="resultatMarque" name="resultatMarque" class="form-control">
+                                                <option value="Oui">Oui</option>
+                                                <option value="Non">Non</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <p class="attention"><span class="jaune">Attention: </span>La validation du résultat est irréversible</p>
+                                    <button (click)="traitementResultat()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Valider</button>
+                                </form>
+                            </div>
+                            <div *ngIf="dejaValider">
+                                <h5 class="text-sm-center mt-2 mb-1 resultat">{{statut}}</h5>
+                            </div>
                         </div>
-                        <hr/><hr/>
                     </div>
                 </div>
             </div>
@@ -57,15 +87,15 @@
                 <div class="col-lg-6 col-xl-12">
                     <div class="card bg-flat-color-3">
                         <div class="card-header">
-                            <strong class="card-title">Modification des informations</strong>
+                            <strong class="card-title"><span class="jaune">Modification</span> des informations</strong>
                         </div>
                         <div class="card-body" >
                             <mat-tab-group mat-align-tabs="start">
                                 <mat-tab label="Générales">
-                                    <form ngForm class="form-horizontal topRna"> 
+                                    <form ngForm class="form-horizontal topRna">  
                                         <div class="row form-group">
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Equipe1</label>
+                                                <label class="form-control-label labelRna">Equipe1</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <select [(ngModel)]="equipe1" name="equipe1" class="form-control">
@@ -77,7 +107,7 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Equipe2</label>
+                                                <label class="form-control-label labelRna">Equipe2</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <select [(ngModel)]="equipe2" name="equipe2" class="form-control">
@@ -89,7 +119,7 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Championnat</label>
+                                                <label class="form-control-label labelRna">Championnat</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <select [(ngModel)]="championnat" name="championnat" class="form-control">
@@ -101,7 +131,7 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Date</label>
+                                                <label class="form-control-label labelRna">Date</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <input [(ngModel)]="dateEtHeure" name="dateEtHeure" type="datetime-local"  class="form-control" />
@@ -109,7 +139,7 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Stade</label>
+                                                <label class="form-control-label labelRna">Stade</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <input [(ngModel)]="stade" name="stade" type="text" class="form-control"/>
@@ -117,16 +147,17 @@
                                         </div>
                                         <div class="row form-group">
                                             <div class="col-md-4">
-                                                <label class="form-control-label">Pays</label>
+                                                <label class="form-control-label labelRna">Pays</label>
                                             </div>
                                             <div class="col-md-8">
                                                 <input [(ngModel)]="pays" name="pays" type="text" class="form-control"/>
                                             </div>
                                         </div>
                                         <hr/>
-                                        <button class="btn btn-outline-secondary btnPari">Modifier</button>
+                                        <button (click)="modifierInfoGeneral()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
                                     </form>
                                 </mat-tab>
+
                                 <mat-tab label="Cotes">
                                     <form ngForm class="form-horizontal topRna"> 
                                         <h6 class="topRna">{{titres[0]}}</h6>
@@ -149,8 +180,37 @@
                                             </div>
                                         </div>
                                         <hr/>
-                                        <button class="btn btn-outline-secondary btnPari">Modifier</button>
+                                        <button (click)="modifierCote()" class="btn btn-outline-secondary btnPari">Modifier</button>
                                     </form>    
+                                </mat-tab>
+
+                                <mat-tab label="Autres">
+                                    <form ngForm class="form-horizontal topRna"> 
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <label class="form-control-label labelRna">Etat</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <select [(ngModel)]="etat" name="etat" class="form-control">
+                                                    <option value="0">Pariable</option>
+                                                    <option value="1">En cours</option>
+                                                    <option value="2">Terminé</option>
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="row form-group">
+                                            <div class="col-md-12">
+                                                <label class="form-control-label labelRna">Résumé</label>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <textarea [(ngModel)]="statut" name="statut" class="form-control" rows="8" placeholder="Entrer ici le résumé du match">{{statut}}</textarea>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <button *ngIf="this.etat != 2" (click)="modifierAutre()" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                        <button *ngIf="this.etat == 2 && !dejaValider" disabled title="Lorque l'état est 'Terminé', veuillez valider le formulaire dans 'Résultats des paris'. Cette validation enregistrera le vainqueur du match, le résultat si les deux équipes marquent et le résumé du match. Cette action permet aussi d'encaisser les comptes des utilisateurs ayant gagné leurs paris" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                        <button *ngIf="this.etat == 2 && dejaValider" disabled title="Lorque le résultat a été validé, cette modification n'est plus disponible" class="btn btn-outline-secondary btnPari"><i class="fa fa-pencil-square-o"></i>&nbsp; Modifier</button>
+                                    </form>
                                 </mat-tab>
                             </mat-tab-group>
                         </div>

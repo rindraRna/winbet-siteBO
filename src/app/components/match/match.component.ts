@@ -5,10 +5,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { Championnat } from '../model/championnat.model';
-import { Match_paris } from '../model/match_paris.model';
-import { ChampionnatService } from '../shared/championnat.service';
-import { MatchService } from '../shared/match.service';
+import { Championnat } from '../../model/championnat.model';
+import { Match_paris } from '../../model/match_paris.model';
+import { ChampionnatService } from '../../shared/championnat.service';
+import { MatchService } from '../../shared/match.service';
 import { SnakBarAjoutComponent } from '../snak-bar-ajout/snak-bar-ajout.component';
 
 @Component({

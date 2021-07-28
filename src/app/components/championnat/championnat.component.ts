@@ -3,30 +3,31 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Equipe } from '../model/equipe.model';
-import { EquipeService } from '../shared/equipe.service';
+import { Championnat } from '../../model/championnat.model';
+import { ChampionnatService } from '../../shared/championnat.service';
 import { SnakBarAjoutComponent } from '../snak-bar-ajout/snak-bar-ajout.component';
 
 @Component({
-  selector: 'app-equipe',
-  templateUrl: './equipe.component.html',
-  styleUrls: ['./equipe.component.css']
+  selector: 'app-championnat',
+  templateUrl: './championnat.component.html',
+  styleUrls: ['./championnat.component.css']
 })
-export class EquipeComponent implements OnInit {
+export class ChampionnatComponent implements OnInit {
+
   displayedColumns: string[] = ['nom', 'modifier', 'supprimer'];
-  dataSource = new MatTableDataSource<Equipe>();
+  dataSource = new MatTableDataSource<Championnat>();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   resourcesLoaded = true;
-  equipe: Equipe[];
-  nomEquipe = "";
-  nomEquipeInsere = "";
-  nomEquipeModifie = "";
+  championnat: Championnat[];
+  nomChampionnat = "";
+  nomChampionnatInsere = "";
+  nomChampionnatModifie = "";
   modifIsDisabled = true;
-  idEquipe = "";
+  idChampionnat = "";
 
   constructor(
-    private equipeService: EquipeService,
+    private championatService: ChampionnatService,
     private snackBar: MatSnackBar
   ) { }
 
@@ -37,79 +38,79 @@ export class EquipeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getEquipes();
+    this.getChampionnnats();
   }
 
-  ajoutEquipe(){
+  ajoutChampionnat(){
     this.resourcesLoaded = true;
-    var equipeInsere = new Equipe();
-    equipeInsere.nom = this.nomEquipeInsere;
-    this.equipeService.ajout(equipeInsere)
+    var championnatInsere = new Championnat();
+    championnatInsere.nom = this.nomChampionnatInsere;
+    this.championatService.ajout(championnatInsere)
       .subscribe( () => {
         this.snackBar.openFromComponent(SnakBarAjoutComponent, {
           duration: 5000,
         });
-        this.getEquipes();
-        this.nomEquipe = "";
+        this.getChampionnnats();
+        this.nomChampionnat = "";
         this.resourcesLoaded = false;
       })
   }
 
-  modifierEquipe(){
+  modifierChampionnat(){
     this.resourcesLoaded = true;
-    var equipeModifie = new Equipe();
-    equipeModifie._id = this.idEquipe;
-    equipeModifie.nom = this.nomEquipeModifie;
-    this.equipeService.modifier(equipeModifie)
+    var championnatModifie = new Championnat();
+    championnatModifie._id = this.idChampionnat;
+    championnatModifie.nom = this.nomChampionnatModifie;
+    this.championatService.modifier(championnatModifie)
       .subscribe( () => {
         this.snackBar.openFromComponent(SnakBarAjoutComponent, {
           duration: 5000,
         });
-        this.getEquipes();
-        this.nomEquipe = "";
+        this.getChampionnnats();
+        this.nomChampionnat = "";
         this.resourcesLoaded = false;
       })
   }
 
-  supprimerEquipe(idEquipe){
-    var confirmation = confirm("Etes-vous sur de supprimer l'équipe?")
+  supprimerChampionnat(idChampionnat){
+    var confirmation = confirm("Etes-vous sur de supprimer le championnat?")
     if(confirmation){
       this.resourcesLoaded = true;
-      this.equipeService.supprimer(idEquipe)
+      this.championatService.supprimer(idChampionnat)
         .subscribe( () => {
           this.snackBar.openFromComponent(SnakBarAjoutComponent, {
             duration: 5000,
           });
-          this.getEquipes();
+          this.getChampionnnats();
           this.resourcesLoaded = false;
         })
     }
   }
 
-  getEquipes(){
-    this.resourcesLoaded = true; 
-    this.nomEquipe = ""; 
-    this.equipeService.getEquipes()
+  getChampionnnats(){
+    this.resourcesLoaded = true;
+    this.nomChampionnat = ""; 
+    this.championatService.getChampionnats()
       .subscribe(data => {
-        this.dataSource.data = data as Equipe[];   
+        this.dataSource.data = data as Championnat[];   
         this.resourcesLoaded = false;   
       });
   }
 
   recherche(){
     this.resourcesLoaded = true; 
-    this.equipeService.recherche(this.nomEquipe)
+    this.championatService.recherche(this.nomChampionnat)
       .subscribe(data => {
-        this.dataSource.data = data as Equipe[];
+        this.dataSource.data = data as Championnat[];
         this.resourcesLoaded = false;
       })
   }
 
   champModifier(id){
-    this.equipeService.getEquipeById(id)
-    .subscribe(equipe => {
-      this.idEquipe = equipe._id;
-      this.nomEquipeModifie = equipe.nom;
+    this.championatService.getChampionnatById(id)
+    .subscribe(championnat => {
+      this.idChampionnat = championnat._id;
+      this.nomChampionnatModifie = championnat.nom;
       setTimeout(
         () => document.getElementById("inputModifier").setAttribute("style", "color: #FBBD00;")
         , 200
@@ -137,4 +138,5 @@ export class EquipeComponent implements OnInit {
       this.modifIsDisabled = false;
     })
   }
+
 }

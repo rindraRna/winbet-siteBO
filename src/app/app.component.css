@@ -2,6 +2,9 @@
     color: #FBBD00;
 }
 
+.clickable{
+    cursor: pointer;
+}
 /* .menuRna{
     background-color: blue;
 } */
