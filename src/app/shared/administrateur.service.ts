@@ -7,8 +7,8 @@ import { Token } from '../model/token.model';
   providedIn: 'root'
 })
 export class AdministrateurService {
-  uri = "https://grails-api-tpt.herokuapp.com/api/login";
-  // uri = "http://localhost:8080/api/login";
+  // uri = "https://grails-api-tpt.herokuapp.com/api/login";
+  uri = "http://localhost:8080/api/login";
 
   constructor(
     private http: HttpClient
