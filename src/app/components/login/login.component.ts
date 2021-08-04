@@ -26,17 +26,17 @@ export class LoginComponent implements OnInit {
     this.administrateurService.loginNode(this.identifiant, this.motDePasse)
     .subscribe( 
       data => {
-        sessionStorage.setItem('token', data.access_token)
-        sessionStorage.setItem('nomUser', data.username)
+        sessionStorage.setItem('token', data.token)
+        sessionStorage.setItem('nomUser', this.identifiant)
         this.router.navigate(['/accueil']).then(() => {
           window.location.reload()
           this.nodeOK = true
         })
       }, err => {
         console.log("erreur login: "+JSON.stringify(err))
-        this.comsErr = true
-        this.resourcesLoaded = false
-        this.nodeOK = true
+        // this.comsErr = true
+        // this.resourcesLoaded = false
+        // this.nodeOK = true
       } 
     )
   }

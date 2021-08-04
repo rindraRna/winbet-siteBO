@@ -24,8 +24,8 @@ export class AdministrateurService {
     );
   }
 
-  loginNode(username, password):Observable<Token> {
-    return this.http.post<Token>(
+  loginNode(username, password):Observable<any> {
+    return this.http.post<any>(
       "https://nodejsapitpt.herokuapp.com/api/administrateur/login", 
       {
         "username": username, 
