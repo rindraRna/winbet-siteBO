@@ -9,7 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AccueilComponent } from './components/accueil/accueil.component';
 import { MatchComponent } from './components/match/match.component';
 import { DetailsMatchComponent } from './components/match/details-match/details-match.component';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {HttpClientModule} from '@angular/common/http';
 import { MatSortModule } from '@angular/material/sort';

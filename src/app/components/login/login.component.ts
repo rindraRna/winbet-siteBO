@@ -33,10 +33,8 @@ export class LoginComponent implements OnInit {
           this.nodeOK = true
         })
       }, err => {
-        console.log("erreur login: "+JSON.stringify(err))
-        // this.comsErr = true
-        // this.resourcesLoaded = false
-        // this.nodeOK = true
+        this.comsErr = true
+        this.resourcesLoaded = false
       } 
     )
   }
@@ -57,7 +55,6 @@ export class LoginComponent implements OnInit {
         }
       }, err => {
         if(this.nodeOK){
-          alert("erreur login: "+JSON.stringify(err))
           this.comsErr = true
           this.resourcesLoaded = false
           grailsOK = true
