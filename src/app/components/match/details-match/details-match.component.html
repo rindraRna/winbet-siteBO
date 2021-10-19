@@ -161,12 +161,14 @@
                                 <mat-tab label="Cotes">
                                     <form ngForm class="form-horizontal topRna"> 
                                         <h6 class="topRna">{{titres[0]}}</h6>
-                                        <div *ngFor="let parisVainqueur of parisVainqueurs" class="row form-group">
-                                            <div class="col-md-7">
-                                                <label class="form-control-label">{{ parisVainqueur.valeur }}</label>
-                                            </div>
-                                            <div class="col-md-5">
-                                                <input type="number" id="{{ parisVainqueur.valeur }}" class="form-control" value="{{ parisVainqueur.cote }}"/>
+                                        <div *ngFor="let parisVainqueur of parisVainqueurs; let index = index">
+                                            <div *ngIf="index < 3" class="row form-group">
+                                                <div class="col-md-7">
+                                                    <label class="form-control-label">{{ parisVainqueur.valeur }}</label>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="number" id="{{ parisVainqueur.valeur }}" class="form-control" value="{{ parisVainqueur.cote }}"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <hr/>
